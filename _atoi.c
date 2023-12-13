@@ -19,13 +19,11 @@ int interactive(info_t *info)
 int is_delim(char c, char *delim)
 {
 	while (*delim)
-		{if (*delim++ == c)
-			{
-				return (1);
-			}
+		if (*delim++ == c)
+			return (1);
 	return (0);
 }
-}
+
 /**
  *_isalpha - checks for alphabetic character
  *@c: The character to input
@@ -34,10 +32,11 @@ int is_delim(char c, char *delim)
 
 int _isalpha(int c)
 {
-	if ((c >= 'A' && c <= 'Z')|| (c >= 'a' && c <= 'z') )
+	if ( (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') )
 	{	
 		return (1);
-	}else
+	} 
+	else
 	{
 		return (0);
 	}
