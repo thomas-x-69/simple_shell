@@ -11,10 +11,9 @@ char *_memset(char *s, char b, unsigned int n)
 {
 	unsigned int i;
 
-	// Iterate through the memory area and fill with the constant byte
 	for (i = 0; i < n; i++)
 		s[i] = b;
-	return (s); // Return a pointer to the memory area s
+	return (s);
 }
 
 /**
@@ -27,11 +26,9 @@ void ffree(char **pp)
 
 	if (!pp)
 		return;
-
-	// Free each string in the string of strings
 	while (*pp)
 		free(*pp++);
-	free(a); // Free the string of strings itself
+	free(a);
 }
 
 /**
@@ -47,22 +44,19 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size)
 	char *p;
 
 	if (!ptr)
-		return (malloc(new_size)); // Allocate new memory block if ptr is NULL
+		return (malloc(new_size));
 	if (!new_size)
-		return (free(ptr), NULL); // Free and return NULL if new_size is 0
+		return (free(ptr), NULL);
 	if (new_size == old_size)
-		return (ptr); // Return the original pointer if sizes are the same
+		return (ptr);
 
-	// Allocate a new memory block of the specified size
 	p = malloc(new_size);
 	if (!p)
-		return (NULL); // Return NULL if malloc fails
+		return (NULL);
 
-	// Copy the content from the old block to the new block
 	old_size = old_size < new_size ? old_size : new_size;
 	while (old_size--)
 		p[old_size] = ((char *)ptr)[old_size];
-
-	free(ptr); // Free the old memory block
-	return (p); // Return the pointer to the new memory block
+	free(ptr);
+	return (p);
 }
