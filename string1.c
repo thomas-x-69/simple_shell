@@ -1,9 +1,9 @@
 #include "shell.h"
 
 /**
- * _strcpy - Copy a string.
- * @dest: Destination buffer.
- * @src: Source string.
+ * _strcpy - Copies a string.
+ * @dest: The destination buffer.
+ * @src: The source string.
  *
  * Return: Pointer to destination.
  */
@@ -11,7 +11,7 @@ char *_strcpy(char *dest, char *src)
 {
     int i = 0;
 
-    if (dest == src || src == NULL)
+    if (dest == src || src == 0)
         return (dest);
 
     while (src[i])
@@ -20,13 +20,13 @@ char *_strcpy(char *dest, char *src)
         i++;
     }
 
-    dest[i] = '\0'; // Ensure null-termination
+    dest[i] = 0; // Ensure null-termination
     return (dest);
 }
 
 /**
- * _strdup - Duplicate a string.
- * @str: String to duplicate.
+ * _strdup - Duplicates a string.
+ * @str: The string to duplicate.
  *
  * Return: Pointer to the duplicated string.
  */
@@ -52,8 +52,8 @@ char *_strdup(const char *str)
 }
 
 /**
- * _puts - Print an input string to stdout.
- * @str: String to be printed.
+ * _puts - Prints an input string.
+ * @str: The string to be printed.
  *
  * Return: Nothing.
  */
@@ -72,11 +72,10 @@ void _puts(char *str)
 }
 
 /**
- * _putchar - Write the character 'c' to stdout.
+ * _putchar - Writes the character 'c' to stdout.
  * @c: The character to print.
  *
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
+ * Return: On success 1. On error, -1 is returned, and errno is set appropriately.
  */
 int _putchar(char c)
 {
