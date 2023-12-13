@@ -9,23 +9,17 @@
  */
 char *_strcpy(char *dest, char *src)
 {
-    int i = 0;
+	int i = 0;
 
-    // Check if source and destination are the same or if source is NULL
-    if (dest == src || src == 0)
-        return (dest);
-
-    // Copy each character from source to destination
-    while (src[i])
-    {
-        dest[i] = src[i];
-        i++;
-    }
-    
-    // Add null terminator to the destination string
-    dest[i] = 0;
-
-    return (dest);
+	if (dest == src || src == 0)
+		return (dest);
+	while (src[i])
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = 0;
+	return (dest);
 }
 
 /**
@@ -36,29 +30,19 @@ char *_strcpy(char *dest, char *src)
  */
 char *_strdup(const char *str)
 {
-    int length = 0;
-    char *ret;
+	int length = 0;
+	char *ret;
 
-    // Check if the input string is NULL
-    if (str == NULL)
-        return (NULL);
-
-    // Calculate the length of the input string
-    while (*str++)
-        length++;
-
-    // Allocate memory for the duplicated string
-    ret = malloc(sizeof(char) * (length + 1));
-
-    // Check if memory allocation is successful
-    if (!ret)
-        return (NULL);
-
-    // Copy characters from the input string to the duplicated string
-    for (length++; length--;)
-        ret[length] = *--str;
-
-    return (ret);
+	if (str == NULL)
+		return (NULL);
+	while (*str++)
+		length++;
+	ret = malloc(sizeof(char) * (length + 1));
+	if (!ret)
+		return (NULL);
+	for (length++; length--;)
+		ret[length] = *--str;
+	return (ret);
 }
 
 /**
@@ -69,18 +53,15 @@ char *_strdup(const char *str)
  */
 void _puts(char *str)
 {
-    int i = 0;
+	int i = 0;
 
-    // Check if the input string is NULL
-    if (!str)
-        return;
-
-    // Loop through the string and print each character
-    while (str[i] != '\0')
-    {
-        _putchar(str[i]);
-        i++;
-    }
+	if (!str)
+		return;
+	while (str[i] != '\0')
+	{
+		_putchar(str[i]);
+		i++;
+	}
 }
 
 /**
@@ -92,20 +73,15 @@ void _puts(char *str)
  */
 int _putchar(char c)
 {
-    static int i;
-    static char buf[WRITE_BUF_SIZE];
+	static int i;
+	static char buf[WRITE_BUF_SIZE];
 
-    // Check if buffer is full or if BUF_FLUSH character is encountered
-    if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
-    {
-        // Write the buffer to stdout and reset the index
-        write(1, buf, i);
-        i = 0;
-    }
-
-    // Check if character is not BUF_FLUSH, then add it to the buffer
-    if (c != BUF_FLUSH)
-        buf[i++] = c;
-
-    return (1);
+	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	{
+		write(1, buf, i);
+		i = 0;
+	}
+	if (c != BUF_FLUSH)
+		buf[i++] = c;
+	return (1);
 }
