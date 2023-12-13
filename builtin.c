@@ -1,6 +1,10 @@
 #include "shell.h"
+
 /**
- * _myexit - this function is used to exits the shell
+ * _myexit - exits the shell
+ * @info: Structure containing potential arguments. Used to maintain
+ *          constant function prototype.
+
  */
 int _myexit(info_t *info)
 {
@@ -25,7 +29,9 @@ int _myexit(info_t *info)
 }
 
 /**
- * _mycd - this function is used to change the current directory of the process
+ * _mycd - changes the current directory of the process
+ * @info: Structure containing potential arguments. Used to maintain
+ *          constant function prototype.
  */
 int _mycd(info_t *info)
 {
@@ -34,7 +40,7 @@ int _mycd(info_t *info)
 
 	s = getcwd(buffer, 1024);
 	if (!s)
-		_puts("getcwd failed show error message here\n");
+		_puts("TODO: >>getcwd failure emsg here<<\n");
 	if (!info->argv[1])
 	{
 		dir = _getenv(info, "HOME=");
@@ -71,14 +77,16 @@ int _mycd(info_t *info)
 }
 
 /**
- * _myhelp -this function is used to change the current directory of the process
+ * _myhelp - changes the current directory of the process
+ * @info: Structure containing potential arguments. Used to maintain
+ *          constant function prototype.
  */
 int _myhelp(info_t *info)
 {
 	char **arg_array;
 
 	arg_array = info->argv;
-	_puts("Function is not yet implemented \n");
+	_puts("Function not yet implemented \n");
 	if (0)
 		_puts(*arg_array); 
 	return (0);
