@@ -1,154 +1,87 @@
 #include "shell.h"
 
 /**
- * is_chain - test if current char in buffer is a chain delimeter
- * @info: the parameter struct
- * @buf: the char buffer
- * @p: address of current position in buf
+ * _strcpy - copies a string
+ * @dest: the destination
+ * @src: the source
  *
- * Return: 1 if chain delimeter, 0 otherwise
+ * Return: pointer to destination
  */
-int is_chain(info_t *info, char *buf, size_t *p)
-{
-	size_t j = *p;
-
-	if (buf[j] == '|' && buf[j + 1] == '|')
-	{
-		buf[j] = 0;
-		j++;
-		info->cmd_buf_type = CMD_OR;
-	}
-	else if (buf[j] == '&' && buf[j + 1] == '&')
-	{
-		buf[j] = 0;
-		j++;
-		info->cmd_buf_type = CMD_AND;
-	}
-	else if (buf[j] == ';') /* found end of this command */
-	{
-		buf[j] = 0; /* replace semicolon with null */
-		info->cmd_buf_type = CMD_CHAIN;
-	}
-	else
-		return (0);
-	*p = j;
-	return (1);
-}
-
-/**
- * check_chain - checks we should continue chaining based on last status
- * @info: the parameter struct
- * @buf: the char buffer
- * @p: address of current position in buf
- * @i: starting position in buf
- * @len: length of buf
- *
- * Return: Void
- */
-void check_chain(info_t *info, char *buf, size_t *p, size_t i, size_t len)
-{
-	size_t j = *p;
-
-	if (info->cmd_buf_type == CMD_AND)
-	{
-		if (info->status)
-		{
-			buf[i] = 0;
-			j = len;
-		}
-	}
-	if (info->cmd_buf_type == CMD_OR)
-	{
-		if (!info->status)
-		{
-			buf[i] = 0;
-			j = len;
-		}
-	}
-
-	*p = j;
-}
-
-/**
- * replace_alias - replaces an aliases in the tokenized string
- * @info: the parameter struct
- *
- * Return: 1 if replaced, 0 otherwise
- */
-int replace_alias(info_t *info)
-{
-	int i;
-	list_t *node;
-	char *p;
-
-	for (i = 0; i < 10; i++)
-	{
-		node = node_starts_with(info->alias, info->argv[0], '=');
-		if (!node)
-			return (0);
-		free(info->argv[0]);
-		p = _strchr(node->str, '=');
-		if (!p)
-			return (0);
-		p = _strdup(p + 1);
-		if (!p)
-			return (0);
-		info->argv[0] = p;
-	}
-	return (1);
-}
-
-/**
- * replace_vars - replaces vars in the tokenized string
- * @info: the parameter struct
- *
- * Return: 1 if replaced, 0 otherwise
- */
-int replace_vars(info_t *info)
+char *_strcpy(char *dest, char *src)
 {
 	int i = 0;
-	list_t *node;
 
-	for (i = 0; info->argv[i]; i++)
+	if (dest == src || src == 0)
+		return (dest);
+	while (src[i])
 	{
-		if (info->argv[i][0] != '$' || !info->argv[i][1])
-			continue;
-
-		if (!_strcmp(info->argv[i], "$?"))
-		{
-			replace_string(&(info->argv[i]),
-				_strdup(convert_number(info->status, 10, 0)));
-			continue;
-		}
-		if (!_strcmp(info->argv[i], "$$"))
-		{
-			replace_string(&(info->argv[i]),
-				_strdup(convert_number(getpid(), 10, 0)));
-			continue;
-		}
-		node = node_starts_with(info->env, &info->argv[i][1], '=');
-		if (node)
-		{
-			replace_string(&(info->argv[i]),
-				_strdup(_strchr(node->str, '=') + 1));
-			continue;
-		}
-		replace_string(&info->argv[i], _strdup(""));
-
+		dest[i] = src[i];
+		i++;
 	}
-	return (0);
+	dest[i] = 0;
+	return (dest);
 }
 
 /**
- * replace_string - replaces string
- * @old: address of old string
- * @new: new string
+ * _strdup - duplicates a string
+ * @str: the string to duplicate
  *
- * Return: 1 if replaced, 0 otherwise
+ * Return: pointer to the duplicated string
  */
-int replace_string(char **old, char *new)
+char *_strdup(const char *str)
 {
-	free(*old);
-	*old = new;
+	int length = 0;
+	char *ret;
+
+	if (str == NULL)
+		return (NULL);
+	while (*str++)
+		length++;
+	ret = malloc(sizeof(char) * (length + 1));
+	if (!ret)
+		return (NULL);
+	for (length++; length--;)
+		ret[length] = *--str;
+	return (ret);
+}
+
+/**
+ *_puts - prints an input string
+ *@str: the string to be printed
+ *
+ * Return: Nothing
+ */
+void _puts(char *str)
+{
+	int i = 0;
+
+	if (!str)
+		return;
+	while (str[i] != '\0')
+	{
+		_putchar(str[i]);
+		i++;
+	}
+}
+
+/**
+ * _putchar - writes the character c to stdout
+ * @c: The character to print
+ *
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
+ */
+int _putchar(char c)
+{
+	static int i;
+	static char buf[WRITE_BUF_SIZE];
+
+	if (c == BUF_FLUSH || i >= WRITE_BUF_SIZE)
+	{
+		write(1, buf, i);
+		i = 0;
+	}
+	if (c != BUF_FLUSH)
+		buf[i++] = c;
 	return (1);
 }
