@@ -37,18 +37,13 @@ char *_strdup(const char *str)
 
 	if (str == NULL)
 		return (NULL);
-
-	while (str[length])
+	while (*str++)
 		length++;
-
 	ret = malloc(sizeof(char) * (length + 1));
 	if (!ret)
 		return (NULL);
-
-	for (length = 0; str[length]; length++)
-		ret[length] = str[length];
-
-	ret[length] = '\0';
+	for (length++; length--;)
+		ret[length] = *--str;
 	return (ret);
 }
 
